@@ -4,7 +4,7 @@ let fs=require("fs");
 const path=require("path");
 let browser=new wd.Builder().forBrowser('chrome').build();
 async function main(){
-    await browser.get("https://www.geeksforgeeks.org/");
+    await browser.get("https://practice.geeksforgeeks.org/explore/?company%5B%5D=Amazon&page=1&company%5B%5D=Amazon");
     await browser.wait(wd.until.elementsLocated(wd.By.css("#hslider li a")));
     let topicWise=await browser.findElements(wd.By.css("#hslider li a"));
     let topicWiseHref=await topicWise[3].getAttribute("href");
@@ -27,6 +27,7 @@ async function main(){
        console.log(i+". "+companyName[i]);
     let index;
     let cname;
+    console.log("Enter the company number for which you want questions");
     process.stdin.on('data',function(data){
        index=data.toString();    
        index=parseInt(index);
@@ -58,7 +59,7 @@ function filehandler(cname,questionsName,questionsHref){
     var header="questions"+"\t\t\t"+"link"+"\n";
     writeStream.write(header);
     for(let i in questionsHref){
-        var row=questionsName[i]+"\t"+questionsHref[i]+"\n";
+        var row=questionsName[i]+"\t\t\t"+questionsHref[i]+"\n";
         writeStream.write(row);
     }
     writeStream.close();
